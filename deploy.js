@@ -1,7 +1,7 @@
 // deploy code will go here
 const HDWalletProvider = require('@truffle/hdwallet-provider');
 const Web3 = require('web3');
-const {interface,bytecode} = require('./compile');
+const { abi, evm } = require("./compile");
 
 const provider = new HDWalletProvider(
     'tornado spin next sister foam surround lesson verify input income skull stuff',
@@ -10,9 +10,8 @@ const provider = new HDWalletProvider(
 const web3 = new Web3(provider);
 const deploy= async ()=>{
     accounts = await web3.eth.getAccounts();
-    console.log("deploying contact from ",accounts[0]);
-    inbox = await new web3.eth.Contract(JSON.parse(interface))
-    .deploy({data:bytecode,arguments:["Hi"]}).send({from:accounts[0],gas:"1000000"});
+    inbox = await new web3.eth.Contract(abi)
+    .deploy({data: "0x" + evm.bytecode.object}).send({from:accounts[0],gas:"1000000"});
     console.log("contact deployed at ",inbox.options.address);
     provider.engine.stop();
 };
